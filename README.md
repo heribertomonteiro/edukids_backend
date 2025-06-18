@@ -6,7 +6,6 @@ Este projeto utiliza um ambiente virtual em Python para gerenciar suas dependên
 
 Siga os passos abaixo para configurar o ambiente localmente:
 
-python -m venv venv
-source venv/bin/activate   # Linux/macOS
-venv\Scripts\activate      # Windows
-pip install -r requirements.txt
+1. python -m venv venv
+2. venv\Scripts\activate
+3. pip install -r requirements.txt
