@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block conteudo %}
+<div class="container py-5">
+    <div class="rounded-4 shadow-sm p-4 calendar-container" style="background: linear-gradient(135deg, var(--light) 0%, #e6f9f2 100%);">
+        <div class="text-center mb-5">
+            <h1 class="mb-3 display-4 font-secondary animate__animated animate__fadeInDown" style="color: var(--dark); animation-delay: 0.2s;">
+                Calendário Anual - <span class="text-primary">{{ year }}</span>
+            </h1>
+            <p class="lead text-muted animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                Descubra os momentos importantes do nosso ano!
+            </p>
+        </div>
+        
+        <div class="row g-4 justify-content-center calendar-grid-months">
+            {% for mes in meses %}
+                <div class="col-md-6 col-lg-4 d-flex align-items-stretch animate__animated animate__fadeInUp" style="animation-delay: {{ forloop.counter | add:'0.1' }}s;">
+                    <div class="card shadow-hover border-0 h-100 d-flex flex-column">
+                        <div class="card-header text-center py-3" style="background-color: var(--primary); color: white;">
+                            <h3 class="h4 mb-0 font-secondary">{{ mes.nome|capfirst }}</h3>
+                        </div>
+                        <div class="card-body d-flex flex-column p-2 calendar-month-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-sm mb-0 calendar-table">
+                                    <thead>
+                                        <tr class="days-of-week-header">
+                                            <th class="text-dark">Seg</th>
+                                            <th class="text-dark">Ter</th>
+                                            <th class="text-dark">Qua</th>
+                                            <th class="text-dark">Qui</th>
+                                            <th class="text-dark">Sex</th>
+                                            <th class="text-dark">Sáb</th>
+                                            <th class="text-dark">Dom</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for semana in mes.dias %}
+                                            <tr>
+                                                {% for dia in semana %}
+                                                    <td class="text-center calendar-day-cell 
+                                                        {% if dia.dia_numero == 0 %}bg-light text-muted{% endif %} 
+                                                        {% if dia.hoje %}today-highlight{% endif %}"
+                                                    >
+                                                        {% if dia.dia_numero != 0 %}
+                                                            <div class="day-number fw-bold mb-1 {% if dia.hoje %}text-white{% else %}text-dark{% endif %}">{{ dia.dia_numero }}</div>
+                                                            <div class="event-list">
+                                                                {% for evento in dia.eventos %}
+                                                                    <a href="{{ evento.get_absolute_url }}" class="event-item rounded px-1 py-1 mb-1" 
+                                                                    style="background-color: var(--primary); color: white;"
+                                                                    >{{ evento.titulo }}</a>
+                                                                {% endfor %}
+                                                            </div>
+                                                        {% endif %}
+                                                    </td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-info text-center mb-0 rounded-4 animate__animated animate__fadeIn">
+                        Nenhum evento encontrado para este ano. Que pena!
+                    </div>
+                </div>
+            {% endfor %} 
+        </div>
+    </div>
+</div>
+
+{% endblock %}

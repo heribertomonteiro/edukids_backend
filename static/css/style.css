@@ -510,3 +510,73 @@ h6,
     border-right: none;
 }
 
+.calendar-container {
+    background: linear-gradient(135deg, var(--light) 0%, #e6f9f2 100%);
+}
+
+.calendar-grid-months .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.calendar-grid-months .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.calendar-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.calendar-table th, .calendar-table td {
+    padding: 0.5rem;
+    vertical-align: top;
+}
+
+.calendar-table thead {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.calendar-day-cell {
+    height: 100px;
+    position: relative;
+    vertical-align: top;
+    background-color: #ffffff;
+}
+
+.calendar-day-cell .day-number {
+    font-size: 1rem;
+}
+
+.calendar-day-cell.today-highlight {
+    background-color: var(--primary);
+    color: white;
+    border: 2px solid #198754;
+}
+
+.calendar-day-cell .event-item {
+    font-size: 0.75rem;
+    display: block;
+    margin-top: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: var(--primary);
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.calendar-day-cell .event-item:hover {
+    background-color: #126e45;
+}
+
+@media (max-width: 768px) {
+    .calendar-day-cell {
+        height: auto;
+        padding: 0.5rem;
+    }
+}
+
