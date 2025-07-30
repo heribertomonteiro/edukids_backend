@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, TemplateView,DetailView
 from django.urls import reverse_lazy
@@ -15,7 +16,7 @@ class PostListView(ListView):
     model = Post
     context_object_name = 'posts'
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = "createpost.html"
     model = Post
     form_class = PostForm
@@ -83,8 +84,7 @@ class CalendarioAnualView(TemplateView):
         
         return context
 
-    
-class EventoCreateView(CreateView):
+class EventoCreateView(LoginRequiredMixin, CreateView):
     template_name = 'create_event.html'
     model = Evento
     form_class = EventoForm

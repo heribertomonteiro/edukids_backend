@@ -1,8 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .admin import CustomUserCreationForm
 from django.contrib import messages
 
 # Create your views here.
+@login_required
 def register(request):
         form = CustomUserCreationForm()
         if request.method == "POST":
