@@ -15,7 +15,7 @@
         
         <div class="row g-4 justify-content-center calendar-grid-months">
             {% for mes in meses %}
-                <div class="col-md-6 col-lg-4 d-flex align-items-stretch animate__animated animate__fadeInUp" style="animation-delay: {{ forloop.counter | add:'0.1' }}s;">
+                <div class="col-md-6 col-lg-4 d-flex align-items-stretch animate__animated animate__fadeInUp" style="animation-delay: 0.{{ forloop.counter }}s;">
                     <div class="card shadow-hover border-0 h-100 d-flex flex-column">
                         <div class="card-header text-center py-3" style="background-color: var(--primary); color: white;">
                             <h3 class="h4 mb-0 font-secondary">{{ mes.nome|capfirst }}</h3>

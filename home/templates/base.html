@@ -49,14 +49,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
-                    <a href="index.html" class="nav-item nav-link active">Inicial</a>
-                    <a href="financeiro.html" class="nav-item nav-link">Financeiro</a>
-                    <a href="contato.html" class="nav-item nav-link">Contato</a>
+                    <a href="{% url 'home' %}" class="nav-item nav-link active">Inicial</a>
+                    <a href="{% url 'home' %}" class="nav-item nav-link">Financeiro</a>
+                    <a href="{% url 'home' %}" class="nav-item nav-link">Contato</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pedagógico</a>
                         <div class="dropdown-menu rounded-0 rounded-bottom border-0 shadow-sm m-0">
-                            <a href="blog.html" class="dropdown-item">Blog</a>
-                            <a href="calendario.html" class="dropdown-item">Calendário Anual</a>
+                            <a href="{% url 'lista' %}" class="dropdown-item">Blog</a>
+                            <a href="{% url 'calendario' %}" class="dropdown-item">Calendário Anual</a>
                         </div>
                     </div>
                 </div>
@@ -65,9 +65,12 @@
                 {% else %}
                     <div class="d-flex flex-lg-row flex-column align-items-lg-center align-items-start">
                         <span class="h3 me-3 mb-0">Olá, {{user.first_name}}</span>
-                        <a href="{% url 'logout' %}" class="btn btn-danger rounded-pill px-3 mt-2 mt-lg-0">
-                            Sair<i class="fa fa-arrow-right ms-3"></i>
-                        </a>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger rounded-pill px-3 mt-2 mt-lg-0">
+                                Sair<i class="fa fa-arrow-right ms-3"></i>
+                            </button>
+                        </form>
                     </div>
                 {% endif %}
             </div>
