@@ -158,6 +158,24 @@ h6,
         transition: .5s;
         opacity: 1;
     }
+    
+    /* Center navbar links between brand and right actions on desktop */
+    .navbar #navbarCollapse {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+    }
+    .navbar #navbarCollapse .navbar-brand {
+        grid-column: 1;
+    }
+    .navbar #navbarCollapse .navbar-nav {
+        grid-column: 2;
+        justify-content: center;
+    }
+    .navbar #navbarCollapse .auth-actions {
+        grid-column: 3;
+        justify-self: end;
+    }
 }
 
 
@@ -174,6 +192,16 @@ h6,
     left: 0;
     background: url(../img/bg-header-top.png) center center repeat-x;
     z-index: 1;
+}
+
+/* Desktop: enlarge only the "Entrar" button (anchor with .auth-actions) */
+@media (min-width: 992px) {
+    .navbar a.auth-actions.btn {
+        font-size: 1rem;            /* keep readable size */
+        padding: 0.6rem 1.25rem;    /* increase horizontal padding */
+        min-width: 150px;           /* ensure visual balance vs brand */
+        text-align: center;         /* center text within the wider button */
+    }
 }
 
 .header-carousel::after,
@@ -254,6 +282,16 @@ h6,
 
 .breadcrumb-item + .breadcrumb-item::before {
     color: rgba(255, 255, 255, .5);
+}
+
+/* Emphasis style for highlighted paragraph on About section */
+.highlight-paragraph {
+    background: rgba(248, 208, 0, 0.12); /* subtle primary tint */
+    border-left: 6px solid var(--primary);
+    padding: 1rem 1.25rem;
+    border-radius: .5rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
 }
 
 

@@ -6,10 +6,19 @@ from .models import Post, Evento
 import calendar
 from datetime import datetime, timedelta
 from .forms import PostForm, EventoForm
+from django.views import View
+
+
 
 # Create your views here.
 def home(request):
     return render(request, "index.html")
+
+def financeiro(request):
+    return render(request, 'financeiro.html')
+
+def contato(request):
+    return render(request, 'contato.html')
 
 class PostListView(ListView):
     template_name = "listpost.html"
