@@ -14,8 +14,16 @@
                 <p>{{ evento.descricao|linebreaksbr }}</p>
             </div>
         {% endif %}
-
-        </a>
+        {% if user.is_authenticated %}
+        <div class="d-flex gap-2 mt-3">
+            <a href="{% url 'evento_editar' evento.pk %}" class="btn btn-warning">
+                <i class="bi bi-pencil-square me-1"></i> Editar evento
+            </a>
+            <a href="{% url 'evento_excluir' evento.pk %}" class="btn btn-danger">
+                <i class="bi bi-trash me-1"></i> Excluir evento
+            </a>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

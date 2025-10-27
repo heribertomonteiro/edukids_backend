@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView, TemplateView,DetailView
+from django.views.generic import ListView, CreateView, TemplateView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Post, Evento
 import calendar
@@ -33,6 +33,17 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         return super().form_valid(form)
+    
+class PostUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = "createpost.html"  # reutiliza o mesmo template
+    model = Post
+    form_class = PostForm
+    success_url = reverse_lazy('lista')
+
+class PostDeleteView(LoginRequiredMixin, DeleteView):
+    model = Post
+    template_name = "post_confirm_delete.html"
+    success_url = reverse_lazy('lista')
     
 class DetalhesEventoView(DetailView):
     model = Evento
@@ -97,4 +108,15 @@ class EventoCreateView(LoginRequiredMixin, CreateView):
     template_name = 'create_event.html'
     model = Evento
     form_class = EventoForm
+    success_url = reverse_lazy('calendario')
+
+class EventoUpdateView(LoginRequiredMixin, UpdateView):
+    template_name = 'create_event.html'  # reutiliza formulário
+    model = Evento
+    form_class = EventoForm
+    success_url = reverse_lazy('calendario')
+
+class EventoDeleteView(LoginRequiredMixin, DeleteView):
+    model = Evento
+    template_name = 'evento_confirm_delete.html'
     success_url = reverse_lazy('calendario')

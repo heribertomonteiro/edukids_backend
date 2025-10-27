@@ -7,8 +7,13 @@
             <span class="fs-1 text-success">
                 <i class="bi bi-pencil-square"></i>
             </span>
-            <h2 class="mb-2 text-primary font-secondary">Criar novo post</h2>
-            <p class="text-muted mb-0">Preencha os campos abaixo para criar um novo post.</p>
+            {% if object %}
+                <h2 class="mb-2 text-primary font-secondary">Editar post</h2>
+                <p class="text-muted mb-0">Altere as informações do post e salve.</p>
+            {% else %}
+                <h2 class="mb-2 text-primary font-secondary">Criar novo post</h2>
+                <p class="text-muted mb-0">Preencha os campos abaixo para criar um novo post.</p>
+            {% endif %}
         </div>
         <form method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}

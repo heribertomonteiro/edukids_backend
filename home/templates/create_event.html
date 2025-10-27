@@ -7,8 +7,13 @@
                 <span class="fs-1 text-primary">
                     <i class="bi bi-calendar-plus"></i>
                 </span>
-                <h2 class="mb-2">Cadastrar Evento</h2>
-                <p class="text-muted mb-0">Preencha os dados para adicionar um novo evento ao calendário.</p>
+                {% if object %}
+                    <h2 class="mb-2">Editar Evento</h2>
+                    <p class="text-muted mb-0">Atualize as informações do evento e salve as alterações.</p>
+                {% else %}
+                    <h2 class="mb-2">Cadastrar Evento</h2>
+                    <p class="text-muted mb-0">Preencha os dados para adicionar um novo evento ao calendário.</p>
+                {% endif %}
             </div>
             <form method="post">
                 {% csrf_token %}
