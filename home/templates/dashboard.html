@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% block conteudo %}
+<div class="container py-5">
+    <div class="rounded-4 shadow-sm p-4" style="background: linear-gradient(135deg, #f8faff 0%, #f5fff9 100%);">
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-8 text-center">
+                <h1 class="mb-3 font-secondary text-primary">Painel Administrativo</h1>
+                <p class="text-muted">Acesse rapidamente as ações mais comuns.</p>
+            </div>
+        </div>
+
+        <div class="row g-4 justify-content-center mb-4">
+            <div class="col-sm-6 col-lg-4 d-flex">
+                <div class="card border-0 shadow-sm flex-fill text-center p-4">
+                    <div class="display-5 text-success mb-2"><i class="bi bi-journal-plus"></i></div>
+                    <h5 class="mb-2">Criar Post</h5>
+                    <p class="text-muted small">Publique novidades e conteúdos pedagógicos no mural.</p>
+                    <a href="{% url 'criar' %}" class="btn btn-success rounded-pill px-4 mt-2">Novo Post</a>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 d-flex">
+                <div class="card border-0 shadow-sm flex-fill text-center p-4">
+                    <div class="display-5 text-dark mb-2"><i class="bi bi-calendar-plus"></i></div>
+                    <h5 class="mb-2">Criar Evento</h5>
+                    <p class="text-muted small">Adicione eventos ao calendário anual da escola.</p>
+                    <a href="{% url 'calendario_evento_novo' %}" class="btn btn-dark rounded-pill px-4 mt-2">Novo Evento</a>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 d-flex">
+                <div class="card border-0 shadow-sm flex-fill text-center p-4">
+                    <div class="display-5 text-dark mb-2"><i class="bi bi-person-plus"></i></div>
+                    <h5 class="mb-2">Criar Usuário</h5>
+                    <p class="text-muted small">Cadastre um novo usuário para acessar o sistema.</p>
+                    <a href="{% url 'register' %}" class="btn btn-dark rounded-pill px-4 mt-2">Novo Usuário</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-sm-6 col-lg-4 d-flex">
+                <div class="card border-0 shadow-sm flex-fill text-center p-4">
+                    <div class="display-6 fw-bold text-dark">{{ posts_count }}</div>
+                    <p class="text-muted mb-0">Posts publicados</p>
+                    <a href="{% url 'lista' %}" class="btn btn-outline-secondary rounded-pill px-4 mt-3">Ver posts</a>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-4 d-flex">
+                <div class="card border-0 shadow-sm flex-fill text-center p-4">
+                    <div class="display-6 fw-bold text-dark">{{ eventos_count }}</div>
+                    <p class="text-muted mb-0">Eventos cadastrados</p>
+                    <a href="{% url 'calendario' %}" class="btn btn-outline-secondary rounded-pill px-4 mt-3">Ver calendário</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

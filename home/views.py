@@ -100,7 +100,6 @@ class CalendarioAnualView(TemplateView):
 
         context['year'] = year
         context['meses'] = meses_com_eventos
-        # Removemos 'next_year' e 'prev_year' do contexto
         
         return context
 
@@ -120,3 +119,12 @@ class EventoDeleteView(LoginRequiredMixin, DeleteView):
     model = Evento
     template_name = 'evento_confirm_delete.html'
     success_url = reverse_lazy('calendario')
+
+class DashboardView(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['posts_count'] = Post.objects.count()
+        context['eventos_count'] = Evento.objects.count()
+        return context

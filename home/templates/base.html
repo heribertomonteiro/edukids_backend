@@ -55,6 +55,9 @@
                     <a href="{% url 'calendario' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'calendario' %}active{% endif %}">Calendário Anual</a>
                     <a href="{% url 'financeiro' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'financeiro' %}active{% endif %}">Financeiro</a>
                     <a href="{% url 'contato' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'contato' %}active{% endif %}">Contato</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'dashboard' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">Dashboard</a>
+                    {% endif %}
                 </div>
                 {% if not user.is_authenticated %}
                     <a href="{% url 'login' %}" class="btn btn-primary rounded-pill px-3 d-none d-lg-block ms-lg-auto">Entrar<i class="fa fa-arrow-right ms-3"></i></a>
