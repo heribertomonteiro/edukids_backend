@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block conteudo %}
+<div class="container py-5">
+    <div class="card border-0 shadow-lg rounded-4 mx-auto" style="max-width: 600px; background: linear-gradient(135deg, #f2f6ff 0%, #e6fff7 100%);">
+        <div class="card-body p-4">
+            <div class="text-center mb-4">
+                <span class="fs-1 text-primary">
+                    <i class="bi bi-calendar-plus"></i>
+                </span>
+                {% if object %}
+                    <h2 class="mb-2">Editar Evento</h2>
+                    <p class="text-muted mb-0">Atualize as informações do evento e salve as alterações.</p>
+                {% else %}
+                    <h2 class="mb-2">Cadastrar Evento</h2>
+                    <p class="text-muted mb-0">Preencha os dados para adicionar um novo evento ao calendário.</p>
+                {% endif %}
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="d-flex justify-content-end mt-4">
+                    <button type="submit" class="btn btn-success rounded-pill px-4 shadow-sm">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block conteudo %}
+<div class="container py-5">
+    <div class="rounded-4 shadow-sm p-4" style="background-color: white;">
+        <h1 class="display-5 mb-4 text-dark font-secondary">{{ evento.titulo }}</h1>
+        <p class="text-muted">
+            <i class="bi bi-calendar"></i> Data: {{ evento.data|date:"d/m/Y" }}
+        </p>
+        {% if evento.descricao %}
+            <div class="mb-4">
+                <h4 class="text-primary">Descrição:</h4>
+                <p>{{ evento.descricao|linebreaksbr }}</p>
+            </div>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <div class="d-flex gap-2 mt-3">
+            <a href="{% url 'evento_editar' evento.pk %}" class="btn btn-warning">
+                <i class="bi bi-pencil-square me-1"></i> Editar evento
+            </a>
+            <a href="{% url 'evento_excluir' evento.pk %}" class="btn btn-danger">
+                <i class="bi bi-trash me-1"></i> Excluir evento
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

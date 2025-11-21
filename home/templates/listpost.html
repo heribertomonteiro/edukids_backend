@@ -5,8 +5,8 @@
     <div class="rounded-4 shadow-sm p-4" style="background: linear-gradient(135deg, #fffbe6 0%, #e6f9f2 100%);">
         <div class="row justify-content-center mb-4">
             <div class="col-lg-8 text-center">
-                <h1 class="mb-3 font-secondary text-primary">Blog</h1>
-                <p class="text-muted">Confira nossos últimos posts, novidades e conteúdos pedagógicos.</p>
+                <h1 class="mb-3 font-secondary text-primary">Mural Acadêmico</h1>
+                <p class="text-muted">Confira nossas últimas atividades, novidades e conteúdos pedagógicos.</p>
             </div>
         </div>
         <div class="row g-4 justify-content-center">
@@ -28,6 +28,16 @@
                             <div class="d-flex justify-content-center align-items-center mt-auto w-100">
                                 <span class="badge bg-success text-white">{{ post.data }}</span>
                             </div>
+                            {% if user.is_authenticated %}
+                            <div class="d-flex gap-2 justify-content-center align-items-center mt-3 w-100">
+                                <a href="{% url 'post_editar' post.pk %}" class="btn btn-sm btn-warning">
+                                    <i class="bi bi-pencil-square me-1"></i> Editar
+                                </a>
+                                <a href="{% url 'post_excluir' post.pk %}" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash me-1"></i> Excluir
+                                </a>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

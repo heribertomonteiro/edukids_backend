@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block style_financeiro %}
+<style>
+        html, body {
+            height: 100%;
+            margin: 0; 
+        }
+        .full-page-message {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: var(--light);
+        }
+
+        .text-dark-custom {
+            color: var(--dark) !important;
+        }
+
+        .border-dark-custom {
+            border-color: var(--dark) !important;
+        }
+    </style>
+{% endblock %}
+
+{% block conteudo %}
+
+        <div class="full-page-message">
+            <h1 class="display-1 text-dark-custom p-4 border border-dark-custom rounded shadow-lg animate__animated animate__zoomIn">
+                Em construção
+            </h1>
+            <p class="lead text-muted mt-3 animate__animated animate__fadeInUp">
+                Estamos trabalhando para trazer algo incrível para você!
+            </p>
+        </div>
+{% endblock %}
