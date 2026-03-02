@@ -12,7 +12,8 @@ from django.views import View
 
 # Create your views here.
 def home(request):
-    return render(request, "index.html")
+    latest_posts = Post.objects.order_by('-id')[:3]
+    return render(request, "index.html", {"latest_posts": latest_posts})
 
 def financeiro(request):
     return render(request, 'financeiro.html')
@@ -24,6 +25,7 @@ class PostListView(ListView):
     template_name = "listpost.html"
     model = Post
     context_object_name = 'posts'
+    ordering = ['-id']
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = "createpost.html"
@@ -35,7 +37,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
     
 class PostUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = "createpost.html"  # reutiliza o mesmo template
+    template_name = "createpost.html"
     model = Post
     form_class = PostForm
     success_url = reverse_lazy('lista')
@@ -47,27 +49,25 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
     
 class DetalhesEventoView(DetailView):
     model = Evento
-    template_name = 'detalhes_evento.html' # Crie este template
-    context_object_name = 'evento' # O nome da variável no template
-    
+    template_name = 'detalhes_evento.html'
+    context_object_name = 'evento'
+
 class CalendarioAnualView(TemplateView):
-    template_name = 'calendario.html' # Certifique-se que o nome do template está correto
+    template_name = 'calendario.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        # Sempre usa o ano atual
         year = datetime.now().year 
         
         cal = calendar.Calendar()
         meses_com_eventos = []
 
-        # Otimização: Busque todos os eventos do ano de uma vez
         eventos_do_ano = Evento.objects.filter(
             data__year=year
         ).order_by('data')
 
-        for month_num in range(1, 13): # De janeiro (1) a dezembro (12)
+        for month_num in range(1, 13):
             month_name = calendar.month_name[month_num]
             month_calendar = cal.monthdayscalendar(year, month_num)
             
@@ -110,7 +110,7 @@ class EventoCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('calendario')
 
 class EventoUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = 'create_event.html'  # reutiliza formulário
+    template_name = 'create_event.html'
     model = Evento
     form_class = EventoForm
     success_url = reverse_lazy('calendario')
