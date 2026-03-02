@@ -386,9 +386,8 @@ h6,
     transition: .5s;
 }
 
-.about-img img:hover {
-    background: var(--primary) !important;
-}
+/* Remove green background on hover for about images */
+/* .about-img img:hover { background: var(--primary) !important; } */
 
 
 /*** Classes ***/
@@ -470,6 +469,27 @@ h6,
 .testimonial-carousel .owl-nav .owl-prev:hover,
 .testimonial-carousel .owl-nav .owl-next:hover {
     background: var(--dark);
+}
+
+/* Auto-sizing testimonial card and improved text readability */
+.testimonial-card {
+    max-width: 860px; /* center narrower for long texts */
+    width: 100%;
+}
+
+.testimonial-text {
+    text-align: left;            /* better flow for long paragraphs */
+    line-height: 1.75;           /* comfortable reading */
+    letter-spacing: 0.01em;      /* subtle spacing for clarity */
+    word-spacing: 0.02em;        /* improve word separation */
+    hyphens: auto;               /* allow syllable breaks when supported */
+    margin-bottom: 0.75rem !important; /* reduce extra space under shorter messages */
+}
+
+/* Ensure avatar/name block wraps nicely under long texts */
+.testimonial-card .d-flex.align-items-center.justify-content-center {
+    flex-wrap: wrap;
+    row-gap: .5rem;
 }
 
 

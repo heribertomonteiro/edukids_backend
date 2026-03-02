@@ -55,26 +55,20 @@
     });
 
 
-    // Testimonials carousel
+    // Testimonials carousel (manual controls)
     $(".testimonial-carousel").owlCarousel({
-        autoplay: true,
-        smartSpeed: 1000,
-        margin: 24,
-        dots: false,
+        autoplay: false,
+        smartSpeed: 800,
+        margin: 16,
+        dots: true,
         loop: true,
-        nav : true,
-        navText : [
-            '<i class="bi bi-arrow-left"></i>',
-            '<i class="bi bi-arrow-right"></i>'
+        nav: true,
+        navText: [
+            '<i class="bi bi-chevron-left"></i>',
+            '<i class="bi bi-chevron-right"></i>'
         ],
-        responsive: {
-            0:{
-                items:1
-            },
-            992:{
-                items:2
-            }
-        }
+        items: 1,
+        autoHeight: true
     });
     
 })(jQuery);

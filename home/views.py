@@ -12,7 +12,8 @@ from django.views import View
 
 # Create your views here.
 def home(request):
-    return render(request, "index.html")
+    latest_posts = Post.objects.order_by('-id')[:3]
+    return render(request, "index.html", {"latest_posts": latest_posts})
 
 def financeiro(request):
     return render(request, 'financeiro.html')
@@ -24,6 +25,7 @@ class PostListView(ListView):
     template_name = "listpost.html"
     model = Post
     context_object_name = 'posts'
+    ordering = ['-id']
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = "createpost.html"

@@ -2,13 +2,10 @@
 {% load static %}
 {% block conteudo %}
     <div class="container-xxl bg-white p-0">
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
+        <!-- Spinner (opcional) -->
+        <div id="spinner" class="d-none bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
         </div>
-        <!-- Spinner End -->
 
         <!-- Carousel Start -->
         <div class="container-fluid p-0 mb-5">
@@ -19,10 +16,10 @@
                         <div class="container">
                             <div class="row justify-content-start">
                                 <div class="col-10 col-lg-8">
-                                    <h1 class="display-2 text-white animated slideInDown mb-4">Pedir fotos a mainha</h1>
-                                    <p class="fs-5 fw-medium text-white mb-4 pb-2">ideias para colocar aqui</p>
-                                    <a href="" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">link1</a>
-                                    <a href="" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">link2</a>
+                                    <h1 class="display-2 text-white animated slideInDown mb-4">Mural Acadêmico</h1>
+                                    <p class="fs-5 fw-medium text-white mb-4 pb-2">Acompanhe o que estamos fazendo esta semana.</p>
+                                    <a href="#mural" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">Últimos Posts</a>
+                                    <a href="{% url 'lista' %}" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">Ver Todas as Postagens</a>
                                 </div>
                             </div>
                         </div>
@@ -35,9 +32,9 @@
                             <div class="row justify-content-start">
                                 <div class="col-10 col-lg-8">
                                     <h1 class="display-2 text-white animated slideInDown mb-4">Matrículas abertas</h1>
-                                    <p class="fs-5 fw-medium text-white mb-4 pb-2">Para mais informações, agende um horário conosco ou veja o nosso calendário</p>
-                                    <a href="" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">Agendar Horário</a>
-                                    <a href="" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">Veja o nosso calendário</a>
+                                    <p class="fs-5 fw-medium text-white mb-4 pb-2">Vagas limitadas, garanta já sua visita guiada.</p>
+                                    <a href="{% url 'contato' %}" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3 animated slideInLeft">Agendar Visita</a>
+                                    <a href="{% url 'calendario' %}" class="btn btn-dark rounded-pill py-sm-3 px-sm-5 animated slideInRight">Ver Calendário</a>
                                 </div>
                             </div>
                         </div>
@@ -47,74 +44,46 @@
         </div>
         <!-- Carousel End -->
 
-
-        <!-- Facilities Start -->
-        <div class="container-xxl py-5">
+        <!-- Mural Acadêmico (últimos posts) -->
+        <section class="container-xxl py-5" id="mural">
             <div class="container">
-                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">Instalações Escolares</h1>
-                    <p>Nossa escola oferece um espaço seguro, acolhedor e pensado para o desenvolvimento das crianças. Contamos com:</p>
+                <div class="text-center mb-4">
+                    <span class="badge rounded-pill text-bg-primary mb-2">Mural</span>
+                    <h2 class="mb-1">Mural Acadêmico</h2>
+                    <p class="text-muted mb-0">Últimas novidades e atividades da escola</p>
                 </div>
-                <div class="row g-4">
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="facility-item">
-                            <div class="facility-icon bg-primary">
-                                <span class="bg-primary"></span>
-                                <i class="fa fa-bus-alt fa-3x text-primary"></i>
-                                <span class="bg-primary"></span>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    {% for post in latest_posts %}
+                    <div class="col">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="ratio ratio-16x9">
+                                {% if post.imagem %}
+                                <img src="{{ post.imagem.url }}" class="w-100 h-100" alt="{{ post.titulo }}" style="object-fit: cover; object-position: center;" loading="lazy" decoding="async">
+                                {% else %}
+                                <img src="{% static 'img/classes-1.jpg' %}" class="w-100 h-100" alt="{{ post.titulo }}" style="object-fit: cover; object-position: center;" loading="lazy" decoding="async">
+                                {% endif %}
                             </div>
-                            <div class="facility-text bg-primary">
-                                <h3 class="text-primary mb-3">School Bus</h3>
-                                <p class="mb-0">Eirmod sed ipsum dolor sit rebum magna erat lorem kasd vero ipsum sit</p>
+                            <div class="card-body">
+                                <h5 class="card-title mb-2">{{ post.titulo }}</h5>
+                                <p class="card-text text-muted mb-3">{{ post.descricao|truncatechars:120 }}</p>
+                                <small class="text-secondary">{{ post.data|date:"d/m/Y" }}</small>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="facility-item">
-                            <div class="facility-icon bg-success">
-                                <span class="bg-success"></span>
-                                <i class="fa fa-futbol fa-3x text-success"></i>
-                                <span class="bg-success"></span>
-                            </div>
-                            <div class="facility-text bg-success">
-                                <h3 class="text-success mb-3">Playground</h3>
-                                <p class="mb-0">Eirmod sed ipsum dolor sit rebum magna erat lorem kasd vero ipsum sit</p>
+                            <div class="card-footer bg-white border-0">
+                                <a href="{% url 'lista' %}" class="btn btn-sm btn-primary">Ver no mural</a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="facility-item">
-                            <div class="facility-icon" style="background-color: rgba(255, 0, 0, 0.726);">
-                                <span style="background-color: rgba(255, 0, 0, 0.726);"></span>
-                                <i class="fa fa-home fa-3x" style="color: rgba(255, 0, 0, 0.726);"></i>
-                                <span style="background-color: rgba(255, 0, 0, 0.726);"></span>
-                            </div>
-                            <div class="facility-text" style="background-color: rgba(255, 0, 0, 0.726);">
-                                <h3 class="mb-3" style="color: rgba(255, 0, 0, 0.726);">Healthy Canteen</h3>
-                                <p class="mb-0">Eirmod sed ipsum dolor sit rebum magna erat lorem kasd vero ipsum sit</p>
-                            </div>
-                        </div>
+                    {% empty %}
+                    <div class="col">
+                        <div class="alert alert-info mb-0">Sem postagens por enquanto. Em breve novidades!</div>
                     </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <div class="facility-item">
-                            <div class="facility-icon bg-info">
-                                <span class="bg-info"></span>
-                                <i class="fa fa-chalkboard-teacher fa-3x text-info"></i>
-                                <span class="bg-info"></span>
-                            </div>
-                            <div class="facility-text bg-info">
-                                <h3 class="text-info mb-3">Positive Learning</h3>
-                                <p class="mb-0">Eirmod sed ipsum dolor sit rebum magna erat lorem kasd vero ipsum sit</p>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
-        </div>
-        <!-- Facilities End -->
+        </section>
 
 
-        <!-- About Start -->
+        <!-- About Start (similar ao original, fundo branco) -->
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="row g-5 align-items-center">
@@ -122,14 +91,14 @@
                         <h1 class="mb-4">Conheça Nosso Trabalho e Nossas Atividades Culturais</h1>
                         <p>Na nossa escola, o aprendizado vai muito além da sala de aula. Acreditamos que cada experiência é uma oportunidade para descobrir, criar e compartilhar. Por isso, desenvolvemos projetos pedagógicos e culturais que estimulam a curiosidade, a imaginação e o respeito pelas diferenças.</p>
                         <p>As crianças participam de oficinas de arte, música, contação de histórias e eventos temáticos, que fortalecem vínculos e ampliam horizontes. Cada atividade é pensada com carinho para despertar o prazer de aprender e o encanto pelas descobertas do dia a dia.</p>
-                        <p class="mb-4 highlight-paragraph">Nosso compromisso é formar crianças felizes, autônomas e criativas, cultivando desde cedo valores como solidariedade, empatia e cooperação bases essenciais para uma educação completa e humana.</p>
+                        <p class="mb-4 highlight-paragraph">Nosso compromisso é formar crianças felizes, autônomas e criativas, cultivando desde cedo valores como solidariedade, empatia e cooperação, bases essenciais para uma educação completa e humana.</p>
                         <div class="row g-4 align-items-center">
                             <div class="col-sm-6">
                                 <a class="btn btn-primary rounded-pill py-3 px-5" href="{% url 'lista' %}">Veja Mais</a>
                             </div>
                             <div class="col-sm-6">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle flex-shrink-0" src="{% static 'img/user.jpg' %}" alt="" style="width: 45px; height: 45px;">
+                                    <img class="rounded-circle flex-shrink-0" src="{% static 'img/rafaella.jpg' %}" alt="" style="width: 45px; height: 45px;">
                                     <div class="ms-3">
                                         <h6 class="text-success mb-1">Rafaella Michely</h6>
                                         <small>Gestora e Fundadora</small>
@@ -141,38 +110,35 @@
                     <div class="col-lg-6 about-img wow fadeInUp" data-wow-delay="0.5s">
                         <div class="row">
                             <div class="col-12 text-center">
-                                <img class="img-fluid w-75 rounded-circle bg-light p-3" src="{% static 'img/about-1.jpg' %}" alt="">
+                                <img class="img-fluid w-75 rounded-circle bg-light p-3" src="{% static 'img/charrete1.jpg' %}" alt="" loading="lazy" decoding="async">
                             </div>
                             <div class="col-6 text-start" style="margin-top: -150px;">
-                                <img class="img-fluid w-100 rounded-circle bg-light p-3" src="{% static 'img/about-2.jpg' %}" alt="">
+                                <img class="img-fluid w-100 rounded-circle bg-light p-3" src="{% static 'img/criancada1.jpg' %}" alt="" loading="lazy" decoding="async">
                             </div>
                             <div class="col-6 text-end" style="margin-top: -150px;">
-                                <img class="img-fluid w-100 rounded-circle bg-light p-3" src="{% static 'img/about-3.jpg' %}" alt="">
+                                <img class="img-fluid w-100 rounded-circle bg-light p-3" src="{% static 'img/luizanocavalo1.jpg' %}" alt="" loading="lazy" decoding="async">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- About End -->
 
 
-        <!-- Call To Action Start -->
+        <!-- Call To Action Start (similar ao original) -->
         <div class="container-xxl py-5">
             <div class="container">
-                <div class="bg-light rounded">
+                <div class="rounded">
                     <div class="row g-0">
                         <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s" style="min-height: 400px;">
                             <div class="position-relative h-100">
-                                <img class="position-absolute w-100 h-100 rounded" src="{% static 'img/call-to-action.jpg' %}" style="object-fit: cover;">
+                                <img class="position-absolute w-100 h-100 rounded" src="{% static 'img/professoras2.jpg' %}" style="object-fit: contain; object-position: center; background:#fff;" alt="" loading="lazy" decoding="async">
                             </div>
                         </div>
                         <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                             <div class="h-100 d-flex flex-column justify-content-center p-5">
                                 <h1 class="mb-4">Torne-se um de nossos professores</h1>
-                                <p class="mb-4">
-                                    Faça parte da nossa equipe e ajude a transformar o futuro das crianças com educação, carinho e dedicação!
-                                </p>
+                                <p class="mb-4">Faça parte da nossa equipe e ajude a transformar o futuro das crianças com educação, carinho e dedicação!</p>
                                 <a class="btn btn-primary py-3 px-5" href="{% url 'contato' %}">Entre em contato conosco<i class="fa fa-arrow-right ms-2"></i></a>
                             </div>
                         </div>
@@ -180,363 +146,84 @@
                 </div>
             </div>
         </div>
-        <!-- Call To Action End -->
-
-
-        <!-- Classes Start -->
-        <div class="container-xxl py-5">
+        <!-- Depoimentos (Feedback) com Carrossel -->
+        <section class="container-xxl py-5">
             <div class="container">
-                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">Nossas Turmas</h1>
-                    <p>As turmas são organizadas por faixa etária, respeitando o ritmo e as necessidades de cada criança. Em cada classe, desenvolvemos atividades que estimulam o aprendizado, a criatividade e a socialização de forma leve e divertida.</p>
+                <div class="text-center mb-5">
+                    <span class="badge rounded-pill text-bg-secondary mb-2">Feedback</span>
+                    <h2 class="mb-1">O que as famílias dizem</h2>
+                    <p class="text-muted mb-0">Experiências reais de quem vive nossa escola no dia a dia</p>
                 </div>
-                <div class="row g-4">
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="classes-item">
-                            <div class="bg-light rounded-circle w-75 mx-auto p-3">
-                                <img class="img-fluid rounded-circle" src="{% static 'img/classes-1.jpg' %}" alt="">
+                <div class="owl-carousel testimonial-carousel">
+                    <div class="item">
+                        <div class="testimonial-card p-4 rounded-4 border bg-white shadow-sm mx-auto">
+                            <div class="text-center mb-3">
+                                <i class="fa fa-quote-left text-primary" style="font-size: 2rem;"></i>
                             </div>
-                            <div class="bg-light rounded p-4 pt-5 mt-n5">
-                                <a class="d-block text-center h3 mt-3 mb-4" href="">Art & Drawing</a>
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle flex-shrink-0" src="{% static 'img/user.jpg' %}" alt="" style="width: 45px; height: 45px;">
-                                        <div class="ms-3">
-                                            <h6 class="text-primary mb-1">Jhon Doe</h6>
-                                            <small>Teacher</small>
-                                        </div>
-                                    </div>
-                                    <span class="bg-primary text-white rounded-pill py-2 px-3" href="">$99</span>
-                                </div>
-                                <div class="row g-1">
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-primary pt-2">
-                                            <h6 class="text-primary mb-1">Age:</h6>
-                                            <small>3-5 Years</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-success pt-2">
-                                            <h6 class="text-success mb-1">Time:</h6>
-                                            <small>9-10 AM</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-warning pt-2">
-                                            <h6 class="text-warning mb-1">Capacity:</h6>
-                                            <small>30 Kids</small>
-                                        </div>
-                                    </div>
+                            <p class="testimonial-text mb-4 fs-6">A Escolinha Flores de Maria foi um verdadeiro presente de Deus para mim e para as crianças. Geraldo e Alice se sentem profundamente acolhidos, amados e vistos por cada pessoa que faz parte desse cantinho tão especial. Não há um único dia em que não cheguem em casa radiante, contando as novidades, as brincadeiras, e as tarefinhas que mais tocaram seus corações.
+Eles amam as “tias” de um jeito tão puro e sincero que chega a emocionar. Cada evento é vivido como uma grande festa, eles se empolgam, vibram, se entregam, porque existe essa conexão verdadeira entre alunos e professores, essa comunicação cheia de cuidado, onde cada detalhe é explicado com tanto amor.
+Sou imensamente grata por todo o carinho, dedicação e acolhimento. Tenho certeza de que esse zelo não é só com os meus filhos, mas com cada criança que passa por aí. 
+O coração de mãe fica quentinho, feliz e cheio de orgulho por ver tanto amor envolvendo os pequenos.😍
+Continuem assim. A escola tem tudo para crescer, florescer e se tornar, a cada dia, um lugar ainda mais especial. 🥰🥰🥰</p>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img class="rounded-circle me-3" src="{% static 'img/ayanne.jpg' %}" style="width:56px;height:56px;object-fit:cover;" alt="">
+                                <div>
+                                    <strong class="d-block">Ayanne Gabriele</strong>
+                                    <small class="text-muted">Mãe da Alice e do Geraldo</small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="classes-item">
-                            <div class="bg-light rounded-circle w-75 mx-auto p-3">
-                                <img class="img-fluid rounded-circle" src="{% static 'img/classes-2.jpg' %}" alt="">
+                    <div class="item">
+                        <div class="testimonial-card p-4 rounded-4 border bg-white shadow-sm mx-auto">
+                            <div class="text-center mb-3">
+                                <i class="fa fa-quote-left text-warning" style="font-size: 2rem;"></i>
                             </div>
-                            <div class="bg-light rounded p-4 pt-5 mt-n5">
-                                <a class="d-block text-center h3 mt-3 mb-4" href="">Color Management</a>
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle flex-shrink-0" src="{% static 'img/user.jpg' %}" alt="" style="width: 45px; height: 45px;">
-                                        <div class="ms-3">
-                                            <h6 class="text-primary mb-1">Jhon Doe</h6>
-                                            <small>Teacher</small>
-                                        </div>
-                                    </div>
-                                    <span class="bg-primary text-white rounded-pill py-2 px-3" href="">$99</span>
-                                </div>
-                                <div class="row g-1">
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-primary pt-2">
-                                            <h6 class="text-primary mb-1">Age:</h6>
-                                            <small>3-5 Years</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-success pt-2">
-                                            <h6 class="text-success mb-1">Time:</h6>
-                                            <small>9-10 AM</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-warning pt-2">
-                                            <h6 class="text-warning mb-1">Capacity:</h6>
-                                            <small>30 Kids</small>
-                                        </div>
-                                    </div>
+                            <p class="testimonial-text mb-4 fs-6">A escola Flores de Maria tem sido fundamental no desenvolvimento do meu filho! Sempre tive um certo medo em relação a escola, pois meu filho é Autista e tinha medo dele não conseguir bom desenvolvimento nos estudos e com os colegas ! 
+Graças a Equipe completamente atenciosa e dedicada, esse medo foi desbloqueado, meu filho ama a escola, suas professoras e seus colegas, o desenvolvimento dele social mudou muito, hoje ele executa atividades sozinho que me deixam extremamente surpresa e feliz ! 
+Sempre indico o Flores de Maria para outras mães sem dúvidas 🤍</p>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img class="rounded-circle me-3" src="{% static 'img/maedavi.jpg' %}" style="width:56px;height:56px;object-fit:cover;" alt="">
+                                <div>
+                                    <strong class="d-block">Luana</strong>
+                                    <small class="text-muted">Mãe do Davi Daniel</small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="classes-item">
-                            <div class="bg-light rounded-circle w-75 mx-auto p-3">
-                                <img class="img-fluid rounded-circle" src="{% static 'img/classes-3.jpg' %}" alt="">
+                    <div class="item">
+                        <div class="testimonial-card p-4 rounded-4 border bg-white shadow-sm mx-auto">
+                            <div class="text-center mb-3">
+                                <i class="fa fa-quote-left text-warning" style="font-size: 2rem;"></i>
                             </div>
-                            <div class="bg-light rounded p-4 pt-5 mt-n5">
-                                <a class="d-block text-center h3 mt-3 mb-4" href="">Athletic & Dance</a>
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle flex-shrink-0" src="{% static 'img/user.jpg' %}" alt="" style="width: 45px; height: 45px;">
-                                        <div class="ms-3">
-                                            <h6 class="text-primary mb-1">Jhon Doe</h6>
-                                            <small>Teacher</small>
-                                        </div>
-                                    </div>
-                                    <span class="bg-primary text-white rounded-pill py-2 px-3" href="">$99</span>
-                                </div>
-                                <div class="row g-1">
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-primary pt-2">
-                                            <h6 class="text-primary mb-1">Age:</h6>
-                                            <small>3-5 Years</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-success pt-2">
-                                            <h6 class="text-success mb-1">Time:</h6>
-                                            <small>9-10 AM</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-warning pt-2">
-                                            <h6 class="text-warning mb-1">Capacity:</h6>
-                                            <small>30 Kids</small>
-                                        </div>
-                                    </div>
+                            <p class="testimonial-text mb-4 fs-6">A escola Flores de Maria tem um  Ambiente familiar, acolhedor e de muita confiança. Profissionais capacitados e diferenciados que nos ajudam na formação de nossos filhos! Nós adoramos esta Escola e temos um carinho muito especial!</p>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img class="rounded-circle me-3" src="{% static 'img/ambrosiomae1.jpg' %}" style="width:56px;height:56px;object-fit:cover;" alt="">
+                                <div>
+                                    <strong class="d-block">Carol</strong>
+                                    <small class="text-muted">Mãe do Ambrósio Neto</small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="classes-item">
-                            <div class="bg-light rounded-circle w-75 mx-auto p-3">
-                                <img class="img-fluid rounded-circle" src="{% static 'img/classes-4.jpg' %}" alt="">
+                    <div class="item">
+                        <div class="testimonial-card p-4 rounded-4 border bg-white shadow-sm mx-auto">
+                            <div class="text-center mb-3">
+                                <i class="fa fa-quote-left text-warning" style="font-size: 2rem;"></i>
                             </div>
-                            <div class="bg-light rounded p-4 pt-5 mt-n5">
-                                <a class="d-block text-center h3 mt-3 mb-4" href="">Language & Speaking</a>
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle flex-shrink-0" src="{% static 'img/user.jpg' %}" alt="" style="width: 45px; height: 45px;">
-                                        <div class="ms-3">
-                                            <h6 class="text-primary mb-1">Jhon Doe</h6>
-                                            <small>Teacher</small>
-                                        </div>
-                                    </div>
-                                    <span class="bg-primary text-white rounded-pill py-2 px-3" href="">$99</span>
-                                </div>
-                                <div class="row g-1">
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-primary pt-2">
-                                            <h6 class="text-primary mb-1">Age:</h6>
-                                            <small>3-5 Years</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-success pt-2">
-                                            <h6 class="text-success mb-1">Time:</h6>
-                                            <small>9-10 AM</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-warning pt-2">
-                                            <h6 class="text-warning mb-1">Capacity:</h6>
-                                            <small>30 Kids</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="classes-item">
-                            <div class="bg-light rounded-circle w-75 mx-auto p-3">
-                                <img class="img-fluid rounded-circle" src="{% static 'img/classes-5.jpg' %}" alt="">
-                            </div>
-                            <div class="bg-light rounded p-4 pt-5 mt-n5">
-                                <a class="d-block text-center h3 mt-3 mb-4" href="">Religion & History</a>
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle flex-shrink-0" src="{% static 'img/user.jpg' %}" alt="" style="width: 45px; height: 45px;">
-                                        <div class="ms-3">
-                                            <h6 class="text-primary mb-1">Jhon Doe</h6>
-                                            <small>Teacher</small>
-                                        </div>
-                                    </div>
-                                    <span class="bg-primary text-white rounded-pill py-2 px-3" href="">$99</span>
-                                </div>
-                                <div class="row g-1">
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-primary pt-2">
-                                            <h6 class="text-primary mb-1">Age:</h6>
-                                            <small>3-5 Years</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-success pt-2">
-                                            <h6 class="text-success mb-1">Time:</h6>
-                                            <small>9-10 AM</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-warning pt-2">
-                                            <h6 class="text-warning mb-1">Capacity:</h6>
-                                            <small>30 Kids</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="classes-item">
-                            <div class="bg-light rounded-circle w-75 mx-auto p-3">
-                                <img class="img-fluid rounded-circle" src="{% static 'img/classes-6.jpg' %}" alt="">
-                            </div>
-                            <div class="bg-light rounded p-4 pt-5 mt-n5">
-                                <a class="d-block text-center h3 mt-3 mb-4" href="">General Knowledge</a>
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle flex-shrink-0" src="{% static 'img/user.jpg' %}" alt="" style="width: 45px; height: 45px;">
-                                        <div class="ms-3">
-                                            <h6 class="text-primary mb-1">Jhon Doe</h6>
-                                            <small>Teacher</small>
-                                        </div>
-                                    </div>
-                                    <span class="bg-primary text-white rounded-pill py-2 px-3" href="">$99</span>
-                                </div>
-                                <div class="row g-1">
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-primary pt-2">
-                                            <h6 class="text-primary mb-1">Age:</h6>
-                                            <small>3-5 Years</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-success pt-2">
-                                            <h6 class="text-success mb-1">Time:</h6>
-                                            <small>9-10 AM</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="border-top border-3 border-warning pt-2">
-                                            <h6 class="text-warning mb-1">Capacity:</h6>
-                                            <small>30 Kids</small>
-                                        </div>
-                                    </div>
+                            <p class="testimonial-text mb-4 fs-6">Aqui expresso minha gratidão a todos os profissionais que faz parte da mesma.
+Minha filha no ano de 2025 ficou no berçário com 1 ano e 3 mês  Adorei a confiança  o carinho e segurança passada pelos profissionais . Eu coloquei ela super apreensiva e com medo de tudo, porém desde o começo a gestora e a professora Rádla mim acalmava e avisaram desde o início como poderia ser o começo e que aos poucos a criança ia se adaptando e foi assim que aconteceu. Com menos de 15 dias, minha filha já se  adaptava muito bem com as tias  e coleguinhas(a) e adorava quando chegava a hora de ir pra escola. Com o passar dos dias quando eu ia pegar ela nem queria vir embora hahaha isso mim deixava super tranquila e mais segura a cada dia. Esse ano teremos mais desafios, pois agora ela irá pra escolinha  já com 2 anos, mas senti tanta segurança, carinho e atenção em todos da escola que espero que ela continue até completar 5/6 anos que é a idade limite que a escola atende. Nota 1000 a todos os funcionários e direção. Recomendo de olhos fechados a escola flores de Maria por sua  Responsabilidade segurança dedicação carinho respeito por cada criança. De uma mamãe grata satisfeita com o ensino e aprendizado ofertado a minha pequena.</p>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img class="rounded-circle me-3" src="{% static 'img/nataliane.jpg' %}" style="width:56px;height:56px;object-fit:cover;" alt="">
+                                <div>
+                                    <strong class="d-block">Nataliane</strong>
+                                    <small class="text-muted">Mãe da Maria Alice</small>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Classes End -->
-
-        <!-- Team Start -->
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">Popular Teachers</h1>
-                    <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit
-                        eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
-                </div>
-                <div class="row g-4">
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="team-item position-relative">
-                            <img class="img-fluid rounded-circle w-75" src="{% static 'img/team-1.jpg' %}" alt="">
-                            <div class="team-text">
-                                <h3>Full Name</h3>
-                                <p>Designation</p>
-                                <div class="d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary  mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary  mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="team-item position-relative">
-                            <img class="img-fluid rounded-circle w-75" src="{% static 'img/team-2.jpg' %}" alt="">
-                            <div class="team-text">
-                                <h3>Full Name</h3>
-                                <p>Designation</p>
-                                <div class="d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary  mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary  mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="team-item position-relative">
-                            <img class="img-fluid rounded-circle w-75" src="{% static 'img/team-3.jpg' %}" alt="">
-                            <div class="team-text">
-                                <h3>Full Name</h3>
-                                <p>Designation</p>
-                                <div class="d-flex align-items-center">
-                                    <a class="btn btn-square btn-primary mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square btn-primary  mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square btn-primary  mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Team End -->
-
-
-        <!-- Testimonial Start -->
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">Our Clients Say!</h1>
-                    <p>Eirmod sed ipsum dolor sit rebum labore magna erat. Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
-                </div>
-                <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="testimonial-item bg-light rounded p-5">
-                        <p class="fs-5">Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
-                        <div class="d-flex align-items-center bg-white me-n5" style="border-radius: 50px 0 0 50px;">
-                            <img class="img-fluid flex-shrink-0 rounded-circle" src="{% static 'img/testimonial-1.jpg' %}" style="width: 90px; height: 90px;">
-                            <div class="ps-3">
-                                <h3 class="mb-1">Client Name</h3>
-                                <span>Profession</span>
-                            </div>
-                            <i class="fa fa-quote-right fa-3x text-primary ms-auto d-none d-sm-flex"></i>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded p-5">
-                        <p class="fs-5">Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
-                        <div class="d-flex align-items-center bg-white me-n5" style="border-radius: 50px 0 0 50px;">
-                            <img class="img-fluid flex-shrink-0 rounded-circle" src="{% static 'img/testimonial-2.jpg' %}" style="width: 90px; height: 90px;">
-                            <div class="ps-3">
-                                <h3 class="mb-1">Client Name</h3>
-                                <span>Profession</span>
-                            </div>
-                            <i class="fa fa-quote-right fa-3x text-primary ms-auto d-none d-sm-flex"></i>
-                        </div>
-                    </div>
-                    <div class="testimonial-item bg-light rounded p-5">
-                        <p class="fs-5">Tempor stet labore dolor clita stet diam amet ipsum dolor duo ipsum rebum stet dolor amet diam stet. Est stet ea lorem amet est kasd kasd erat eos</p>
-                        <div class="d-flex align-items-center bg-white me-n5" style="border-radius: 50px 0 0 50px;">
-                            <img class="img-fluid flex-shrink-0 rounded-circle" src="{% static 'img/testimonial-3.jpg' %}" style="width: 90px; height: 90px;">
-                            <div class="ps-3">
-                                <h3 class="mb-1">Client Name</h3>
-                                <span>Profession</span>
-                            </div>
-                            <i class="fa fa-quote-right fa-3x text-primary ms-auto d-none d-sm-flex"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Testimonial End -->
+        </section>
     </div>
 {% endblock %}
